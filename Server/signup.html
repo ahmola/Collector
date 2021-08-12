@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="kor">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src = "/socket.io/socket.io.js"></script>
+    <script>
+        window.onload = () => {
+            var socket = io.connect();
+
+            socket.on('isOkay', function () {
+                alert("Thanks for your joining! Welcome!");
+                window.close();
+            });
+
+            socket.on('fail', function () {
+                alert("Error Occured, please Try again");
+            });
+
+            document.getElementById('signup').onclick = () => {
+                var info = {
+                    ID: document.getElementById('id').value,
+                    password: document.getElementById('password').value,
+                    email: document.getElementById('email').value
+                };
+
+                var user = JSON.stringify(info);
+                socket.emit('signup', user);
+            };
+        };
+    </script>
+    <title>SignUp for Login</title>
+</head>
+<body>
+    <h1>SignUp to be Welcomed!</h1>
+    <hr/>
+    <form>
+        <input type="text" id = "id"/><br>
+        <input type="password" id = "password"/><br>
+        <input type="text" id = "email"/><br>
+        <input type="button" id = "signup" value="SignUp"/>
+    </form>
+</body>
+</html>
