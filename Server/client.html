@@ -25,6 +25,8 @@
                 
                 var user = JSON.stringify(info);
                 socket.emit('login', user);
+
+                window.location.href = "wallpaper";
             };
 
             document.getElementById('signup').onclick = ()=>{

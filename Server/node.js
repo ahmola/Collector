@@ -4,7 +4,7 @@ var http = require('http');
 var url = require('url');
 var socketio = require('socket.io');
 var mysql = require('mysql');
-const path = require('path/posix');
+
 
 //서버 생성
 var app = express();
@@ -24,7 +24,7 @@ var server = http.createServer(function(request, response){
             response.end(data);
         });
     }
-    else if(pathname == '/wallpaper'){ //컬렉터
+    else if(pathname == '/wallpaper'){
         fs.readFile('wallpaper.html', function(error, data){
             response.writeHead(200, {'Content-Type' : 'text/html'});
             response.end(data);
@@ -80,6 +80,12 @@ io.sockets.on('connection', function(socket){
                 socket.emit('isOkay');
             }
         });
+
+        fs.mkdirSync(__dirname+'/'+user.ID, function(error){
+            if(error){
+                console.log(error);
+            }
+        })
     });
 
     socket.on('collect', function(data){ // collector
